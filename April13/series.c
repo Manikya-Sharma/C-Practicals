@@ -14,6 +14,8 @@ int main() {
         if (term % N2 != 0)
         {
             printf("%d\n", term);
+        } else {
+            N1++;
         }
         i++;
     }
