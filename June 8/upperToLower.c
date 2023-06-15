@@ -11,7 +11,7 @@ int main()
     }
     for (int i = 0; i < len; i++)
     {
-        if (s1[i] > 'A' && s1[i] < 'Z')
+        if (s1[i] >= 'A' && s1[i] <= 'Z')
         {
             s1[i] += 32;
         }
