@@ -59,14 +59,9 @@ Laptop getLaptop()
 
 int main()
 {
-    cout << "Enter Laptop 1:-" << endl;
+    cout << "Enter Laptop details:-" << endl;
     Laptop lp1 = getLaptop();
     cout << "\n\nYou laptop has following specificaions" << endl;
     lp1.displayLaptop();
-
-    cout << "Enter Laptop 2:-" << endl;
-    Laptop lp2 = getLaptop();
-    cout << "\n\nYou laptop has following specificaions" << endl;
-    lp2.displayLaptop();
     return 0;
 }
