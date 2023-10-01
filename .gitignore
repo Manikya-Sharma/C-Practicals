@@ -4,4 +4,5 @@
 !*.cpp
 !*.txt
 practice/
+!/sem3/practice/
 .vscode/
