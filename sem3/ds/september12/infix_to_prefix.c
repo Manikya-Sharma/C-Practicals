@@ -152,7 +152,6 @@ char *infix_to_prefix(char input[])
         struct stack temp_num;
 
         temp_op.top = -1;
-        temp_num.top = -1;
 
         while (!empty(&op_stack))
         {
