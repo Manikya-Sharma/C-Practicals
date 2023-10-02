@@ -9,7 +9,7 @@ struct queue {
     int items[MAX_QUEUE];
 };
 
-int empty(struct queue *pq)
+int empty_stack(struct queue *pq)
 {
     if (pq->rear == -1) {
         return 1;
@@ -30,7 +30,7 @@ void insert(struct queue *pq, int item)
 
 int remove_q(struct queue *pq)
 {
-    if (empty(pq)) {
+    if (empty_stack(pq)) {
         printf("Underlfow!\n");
         exit(1);
     }

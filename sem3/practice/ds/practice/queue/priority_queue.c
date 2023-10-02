@@ -10,7 +10,7 @@ struct queue {
     int items[MAX_QUEUE];
 };
 
-int empty(struct queue *pq)
+int empty_stack(struct queue *pq)
 {
     if (pq->front == pq->rear) {
         return 1;
