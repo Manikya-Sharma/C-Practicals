@@ -1,8 +1,2 @@
-*
-!/**/
-!*.c
-!*.cpp
-!*.txt
-practice/
-!/sem3/practice/
+*.out
 .vscode/
