@@ -19,18 +19,16 @@ void freeNode(NODEPTR node) { free(node); }
 void insertAfter(NODEPTR node, int info)
 {
     if (node == NULL) {
-        node = getNode();
-        node->info = info;
-        node->next = NULL;
+        printf("Invalid! Cant append to NULL\n");
+        exit(1);
+    }
+    else if (node->next == NULL) {
+        printf("Invalid! Use insertEnd instead\n");
+        exit(1);
     }
     NODEPTR newNode = getNode();
-    if (node->next != NULL) {
-
-        newNode->next = node->next;
-    }
-    else {
-        newNode->next = NULL;
-    }
+    newNode->next = node->next;
+    newNode->next = NULL;
     node->next = newNode;
     newNode->info = info;
 }
@@ -38,7 +36,7 @@ void insertAfter(NODEPTR node, int info)
 int removeAfter(NODEPTR node)
 {
     if (node->next == NULL) {
-        printf("No node to remove!");
+        printf("No node to remove!\n");
         exit(1);
     }
     NODEPTR nodeToRemove = node->next;
@@ -46,6 +44,19 @@ int removeAfter(NODEPTR node)
     int info = nodeToRemove->info;
     free(nodeToRemove);
     return info;
+}
+
+void voidInsertion(NODEPTR head, int info)
+{
+    if (head != NULL) {
+        printf("Invalid! Only void insertion allowed!\n");
+        exit(1);
+    }
+    else {
+        head = getNode();
+        head->info = info;
+        head->next = NULL;
+    }
 }
 
 void displayLinkedList(NODEPTR head)
@@ -60,9 +71,8 @@ void displayLinkedList(NODEPTR head)
 
 int main()
 {
-    NODEPTR head = getNode();
-    head->info = 3;
-    head->next = NULL;
+    NODEPTR head = NULL;
+    voidInsertion(head, 5);
     insertAfter(head, 5);
     insertAfter(head, 6);
     insertAfter(head, 10);
