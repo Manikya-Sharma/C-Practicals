@@ -17,7 +17,11 @@ class Eastside
 public:
     void transferKidsFurniture(Marksndancer md);
 
-    Eastside(int kidsFurniture,int totalFurniture,float assets,float averageProductCost):kidsFurniture(kidsFurniture), totalFurniture(totalFurniture), assets(assets), averageProductCost(averageProductCost) {}
+    Eastside(int kidsFurniture, int totalFurniture, float assets,
+             float averageProductCost)
+        : kidsFurniture(kidsFurniture), totalFurniture(totalFurniture),
+          assets(assets), averageProductCost(averageProductCost)
+    {}
 };
 
 class Marksndancer
@@ -34,23 +38,31 @@ class Marksndancer
     void transferClothesToEastside(Eastside es)
     {
         cout << "Transferring products to Eastside" << endl;
-        es.totalFurniture += (productsInKids+productsInMen+productsInWomen);
+        es.totalFurniture += (productsInKids + productsInMen + productsInWomen);
         cout << "Eastside now has " << es.totalFurniture << " products" << endl;
-        es.averageProductCost += 0.1*es.averageProductCost;
-        averageProductCost += 0.1*averageProductCost;
-        cout << "Average product cost in Eastside is now " << es.averageProductCost << endl;
-        cout << "Average product cost in Marksndancer is now " << averageProductCost << endl;
+        es.averageProductCost += 0.1 * es.averageProductCost;
+        averageProductCost += 0.1 * averageProductCost;
+        cout << "Average product cost in Eastside is now "
+             << es.averageProductCost << endl;
+        cout << "Average product cost in Marksndancer is now "
+             << averageProductCost << endl;
     }
 
 public:
-    Marksndancer(int productsInKids,int productsInMen, int productsInWomen, float assets,float averageProductCost):productsInKids(productsInKids), productsInMen(productsInMen), productsInWomen(productsInWomen), assets(assets), averageProductCost(averageProductCost){}
+    Marksndancer(int productsInKids, int productsInMen, int productsInWomen,
+                 float assets, float averageProductCost)
+        : productsInKids(productsInKids), productsInMen(productsInMen),
+          productsInWomen(productsInWomen), assets(assets),
+          averageProductCost(averageProductCost)
+    {}
 };
 
 void Eastside::transferKidsFurniture(Marksndancer md)
 {
     cout << "Transferring " << kidsFurniture << " to Marksndancer" << endl;
     md.productsInKids += kidsFurniture;
-    cout << "Now Marksndancer has " << md.productsInKids << " kids products" << endl;
+    cout << "Now Marksndancer has " << md.productsInKids << " kids products"
+         << endl;
 }
 
 void merger(Marksndancer md, Eastside es)
@@ -62,13 +74,17 @@ void merger(Marksndancer md, Eastside es)
     {
         newStore(md, es);
     }
-    cout << "Do you want to transfer furniture from Eastside to Marksndancer?(y/n)" << endl;
+    cout << "Do you want to transfer furniture from Eastside to "
+            "Marksndancer?(y/n)"
+         << endl;
     cin >> option;
     if (option == 'y')
     {
         es.transferKidsFurniture(md);
     }
-    cout << "Do you want to transfer clothes from Marksndancer to Eastside?(y/n)" << endl;
+    cout
+        << "Do you want to transfer clothes from Marksndancer to Eastside?(y/n)"
+        << endl;
     cin >> option;
     if (option == 'y')
     {
@@ -78,8 +94,11 @@ void merger(Marksndancer md, Eastside es)
 
 void newStore(Marksndancer md, Eastside es)
 {
-    cout << "Final assets: " << (md.assets+es.assets) << endl;
-    cout << "Total products: " << (md.productsInKids + es.kidsFurniture+md.productsInMen+md.productsInWomen+es.totalFurniture) << endl;
+    cout << "Final assets: " << (md.assets + es.assets) << endl;
+    cout << "Total products: "
+         << (md.productsInKids + es.kidsFurniture + md.productsInMen +
+             md.productsInWomen + es.totalFurniture)
+         << endl;
 }
 
 Marksndancer getMarksndancer()
@@ -99,7 +118,8 @@ Marksndancer getMarksndancer()
     cout << "Enter the average product cost: ";
     float averageProductCost;
     cin >> averageProductCost;
-    Marksndancer md(productsInKids, productsInMen, productsInWomen, assets, averageProductCost);
+    Marksndancer md(productsInKids, productsInMen, productsInWomen, assets,
+                    averageProductCost);
     return md;
 }
 
@@ -117,11 +137,12 @@ Eastside getEastside()
     cout << "Enter the average product cost: ";
     float averageProductCost;
     cin >> averageProductCost;
-    Eastside es(kidsFurniture, totalFurniture,  assets, averageProductCost);
+    Eastside es(kidsFurniture, totalFurniture, assets, averageProductCost);
     return es;
 }
 
-int main() {
+int main()
+{
     cout << "Enter details for Marksndancer" << endl;
     Marksndancer md = getMarksndancer();
     cout << "Enter details for Eastside" << endl;

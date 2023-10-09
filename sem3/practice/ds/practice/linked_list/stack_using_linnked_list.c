@@ -34,6 +34,10 @@ void push(struct stack *ps, int item)
 
 int pop(struct stack *ps)
 {
+    if (empty(ps)) {
+        printf("Underflow!\n");
+        exit(1);
+    }
     int item = ps->top->info;
     NODEPTR removeNode = ps->top;
     ps->top = ps->top->next;
