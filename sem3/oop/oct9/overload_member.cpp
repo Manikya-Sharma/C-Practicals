@@ -6,11 +6,19 @@ class CustomNumber
     int value;
 
 public:
-    CustomNumber() {}
+    CustomNumber() : value(0) {}
     CustomNumber(int value) : value(value) {}
 
-    friend ostream &operator<<(ostream &os, CustomNumber cn);
-    friend istream &operator>>(istream &is, CustomNumber cn);
+    ostream &operator<<(ostream &os)
+    {
+        os << value << " (custom number)";
+        return os;
+    }
+    istream &operator>>(istream &is)
+    {
+        is >> value;
+        return is;
+    }
     CustomNumber operator+(CustomNumber cn)
     {
         CustomNumber c2;
@@ -25,26 +33,33 @@ public:
     int operator%(CustomNumber cn) { return value % cn.value; }
 };
 
-ostream &operator<<(ostream &os, CustomNumber cn)
-{
-    os << cn.value << " (custom number)";
-    return os;
-}
-
-istream &operator>>(istream &is, CustomNumber cn)
-{
-    is >> cn.value;
-    return is;
-}
-
 int main()
 {
     CustomNumber cn1(5);
-    CustomNumber cn2(7);
-    CustomNumber cn3(18);
-    cout << cn1 << endl << cn2 << endl << cn3 << endl;
-    cn3 = cn1 = cn2;
+    CustomNumber cn2;
+    cout << "Enter number 2:";
+    cn2 >> cin;
+
+    cn1 << cout;
     cout << endl;
-    cout << cn1 << endl << cn2 << endl << cn3 << endl;
+
+    cn2 << cout;
+    cout << endl;
+
+    cout << "number1 + number2: ";
+    (cn1 + cn2) << cout;
+    cout << endl;
+
+    cout << "number1 % number2: ";
+    cout << (cn1 % cn2);
+    cout << endl;
+
+    cn1 = cn2;
+    cout << "After assignment:-" << endl;
+    cn1 << cout;
+    cout << endl;
+    cn2 << cout;
+    cout << endl;
+
     return 0;
 }

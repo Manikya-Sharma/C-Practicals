@@ -15,15 +15,15 @@ public:
 int main()
 {
     int marks;
-    cout << "Enter narks of student 1: ";
+    cout << "Enter marks of student 1: ";
     cin >> marks;
     Student s1(marks);
 
-    cout << "Enter narks of student 2: ";
+    cout << "Enter marks of student 2: ";
     cin >> marks;
     Student s2(marks);
 
-    cout << "Enter narks of student 3: ";
+    cout << "Enter marks of student 3: ";
     cin >> marks;
     Student s3(marks);
 
