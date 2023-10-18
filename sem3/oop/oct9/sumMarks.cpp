@@ -9,7 +9,11 @@ public:
     Student() : marks(0) {}
     Student(int marks) : marks(marks) {}
     void display() { cout << "Marks: " << marks << endl; }
-    Student operator+(Student s) { return marks + s.marks; }
+    Student operator+(Student s)
+    {
+        cout << "marks + s.marks = " << marks << "+" << s.marks << endl;
+        return marks + s.marks;
+    }
 };
 
 int main()
@@ -27,7 +31,7 @@ int main()
     cin >> marks;
     Student s3(marks);
 
-    Student s = s1 + s2 + s3;
+    Student s = s1 + (s2 + s3);
     cout << "Sum of marks: -\n";
     s.display();
     return 0;
