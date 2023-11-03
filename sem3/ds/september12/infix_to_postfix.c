@@ -1,6 +1,6 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #define STACK_SIZE 100
 
@@ -15,8 +15,7 @@ int empty(struct stack *ps)
     if (ps->top < 0)
     {
         return 1;
-    }
-    else
+    } else
     {
         return 0;
     }
@@ -31,15 +30,9 @@ int pop(struct stack *ps)
     return ps->items[ps->top--];
 }
 
-void push(struct stack *ps, int item)
-{
-    ps->items[++ps->top] = item;
-}
+void push(struct stack *ps, int item) { ps->items[++ps->top] = item; }
 
-int stackTop(struct stack *ps)
-{
-    return ps->items[ps->top];
-}
+int stackTop(struct stack *ps) { return ps->items[ps->top]; }
 
 int operand(char ch)
 {
@@ -52,48 +45,19 @@ int operand(char ch)
 
 int prec(char op1, char op2)
 {
-    if (op1 == '$')
+    char operators[5] = {'$', '*', '/', '+', '-'};
+    for (int i = 0; i < 5; i++)
     {
-        return 1;
+        if (op1 == operators[i])
+        {
+            return 1;
+        }
+        if (op2 == operators[i])
+        {
+            return 0;
+        }
     }
-    else if (op2 == '$')
-    {
-        return 0;
-    }
-
-    if (op1 == '*')
-    {
-        return 1;
-    }
-    else if (op2 == '*')
-    {
-        return 0;
-    }
-
-    if (op1 == '/')
-    {
-        return 1;
-    }
-    else if (op2 == '/')
-    {
-        return 0;
-    }
-    if (op1 == '+')
-    {
-        return 1;
-    }
-    else if (op2 == '+')
-    {
-        return 0;
-    }
-    if (op1 == '-')
-    {
-        return 1;
-    }
-    else if (op2 == '-')
-    {
-        return 0;
-    }
+    return 1;
 }
 
 char *infix_to_postfix(char input[])
@@ -110,8 +74,7 @@ char *infix_to_postfix(char input[])
         {
             postfix[j] = symb;
             j++;
-        }
-        else
+        } else
         {
             while (!empty(&op_stk) && prec(stackTop(&op_stk), symb))
             {
@@ -141,5 +104,6 @@ int main()
 
     char *postfix = infix_to_postfix(infix);
     printf("%s\n", postfix);
+    free(postfix);
     return 0;
 }

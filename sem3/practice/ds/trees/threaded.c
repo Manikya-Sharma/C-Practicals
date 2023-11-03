@@ -63,6 +63,7 @@ void setRight(NODEPTR node, int info)
     {
         newNode->right = node->right;
         newNode->isThread = 1;
+        node->isThread = 0;
     }
     node->right = newNode;
 }

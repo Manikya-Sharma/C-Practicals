@@ -146,5 +146,9 @@ int main()
     // cp3.ParentProtectedFunction(); // not allowed
     // cp3.ParentPublicFunction();    // not allowed
 
+    cp1.CallFns();
+    cp2.CallFns();
+    cp3.CallFns();
+
     return 0;
 }

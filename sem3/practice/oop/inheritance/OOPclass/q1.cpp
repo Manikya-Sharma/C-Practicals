@@ -40,7 +40,7 @@ public:
 class D : public B, public C
 {
 public:
-    D(int a1) : C(a1), B(a1)
+    D(int a1) : C(a1), B(a1), A(a1)
     {
         C();
         B();
