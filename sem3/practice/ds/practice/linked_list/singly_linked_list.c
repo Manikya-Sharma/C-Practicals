@@ -1,89 +1,85 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node {
+struct Node
+{
     int info;
     struct Node *next;
 };
 
 typedef struct Node *NODEPTR;
 
-NODEPTR getNode()
-{
-    NODEPTR node = (NODEPTR)malloc(sizeof(struct Node));
-    return node;
-}
-
+NODEPTR getNode() { return (NODEPTR)malloc(sizeof(struct Node)); }
 void freeNode(NODEPTR node) { free(node); }
+
+void insertAtHead(NODEPTR *head, int info)
+{
+    NODEPTR newNode = getNode();
+    newNode->info = info;
+    newNode->next = *head;
+    *head = newNode;
+}
 
 void insertAfter(NODEPTR node, int info)
 {
-    if (node == NULL) {
-        printf("Invalid! Cant append to NULL\n");
-        exit(1);
-    }
-    else if (node->next == NULL) {
-        printf("Invalid! Use insertEnd instead\n");
-        exit(1);
-    }
     NODEPTR newNode = getNode();
-    newNode->next = node->next;
-    newNode->next = NULL;
-    node->next = newNode;
     newNode->info = info;
+    newNode->next = node->next;
+    node->next = newNode;
 }
 
 int removeAfter(NODEPTR node)
 {
-    if (node->next == NULL) {
-        printf("No node to remove!\n");
-        exit(1);
-    }
-    NODEPTR nodeToRemove = node->next;
+    NODEPTR toRemove = node->next;
     node->next = node->next->next;
-    int info = nodeToRemove->info;
-    free(nodeToRemove);
+    int info = toRemove->info;
+    freeNode(toRemove);
     return info;
 }
 
-void voidInsertion(NODEPTR head, int info)
+void display(NODEPTR head)
 {
-    if (head != NULL) {
-        printf("Invalid! Only void insertion allowed!\n");
-        exit(1);
-    }
-    else {
-        head = getNode();
-        head->info = info;
-        head->next = NULL;
-    }
-}
-
-void displayLinkedList(NODEPTR head)
-{
-    NODEPTR temp = head;
-    while (temp != NULL) {
-        printf("%d ", temp->info);
-        temp = temp->next;
+    while (head != NULL)
+    {
+        printf("%d ", head->info);
+        head = head->next;
     }
     printf("\n");
 }
 
 int main()
 {
+
     NODEPTR head = NULL;
-    voidInsertion(head, 5);
-    insertAfter(head, 5);
-    insertAfter(head, 6);
-    insertAfter(head, 10);
+    int option, info;
+    printf("===Linked List ===\n");
+    do
+    {
+        printf("\n0. Exit\n");
+        printf("1. Insert\n");
+        printf("2. Remove\n");
+        printf("3. Display\n");
+        scanf("%d", &option);
+        if (option == 0)
+        {
+            printf("Bye\n");
+        } else if (option == 1)
+        {
+            printf("Enter the value to insert: ");
+            scanf("%d", &info);
+            if (head == NULL)
+                insertAtHead(&head, info);
+            else
+                insertAfter(head, info);
+        } else if (option == 2)
+        {
+            info = removeAfter(head);
+            printf("Removed %d from the list", info);
+        } else if (option == 3)
+        {
+            display(head);
+        }
 
-    displayLinkedList(head);
-
-    removeAfter(head->next);
-    displayLinkedList(head);
-
-    removeAfter(head);
-    displayLinkedList(head);
-
+    } while (option != 0);
     return 0;
 }

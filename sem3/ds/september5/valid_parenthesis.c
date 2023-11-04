@@ -48,33 +48,34 @@ int valid_parenthesis(char arr[])
     while (arr[i] != '\0')
     {
         char elem = arr[i];
-        if (elem == '(' || elem == '[' || elem == '{')
+        if (elem == '(' || elem == '[' || elem == '{'){
             push(&s, arr[i]);
+        }
         else
         {
-            if (s.top == 0)
+            if (s.top == -1)
                 return 0;
             char popped_elem = pop(&s);
-            if (elem == '(')
+            if (elem == ')')
             {
-                if (popped_elem != ')')
+                if (popped_elem != '(')
                     return 0;
             }
-            else if (elem == '[')
+            else if (elem == ']')
             {
-                if (popped_elem != ']')
+                if (popped_elem != '[')
                     return 0;
             }
 
-            else if (elem == '{')
+            else if (elem == '}')
             {
-                if (popped_elem != '}')
+                if (popped_elem != '{')
                     return 0;
             }
         }
         i++;
     }
-    if (s.top != 0)
+    if (s.top != -1)
         return 0;
     return 1;
 }
