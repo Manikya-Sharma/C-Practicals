@@ -9,9 +9,7 @@ public:
     virtual void project() = 0;
     virtual void evaluate() = 0;
     virtual ~DTU() {}
-    DTU() {
-        cws = 0;
-    }
+    DTU() { cws = 0; }
 };
 
 class IT : public DTU
@@ -33,7 +31,10 @@ public:
         cout << "Mech project Submitted" << endl;
         cws = 15;
     }
-    void evaluate() { cout << "You score from Mech Department: " << cws << endl; }
+    void evaluate()
+    {
+        cout << "You score from Mech Department: " << cws << endl;
+    }
 };
 
 int DTU::cws = 0;
