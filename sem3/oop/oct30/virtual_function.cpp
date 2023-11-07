@@ -8,7 +8,8 @@ public:
     static int cws;
     virtual void project() = 0;
     virtual void evaluate() = 0;
-    virtual ~DTU() {}
+    // virtual ~DTU() {}
+    ~DTU() { cout << "destructor virtual" << endl; }
     DTU() { cws = 0; }
 };
 
@@ -21,6 +22,7 @@ public:
         cws = 20;
     }
     void evaluate() { cout << "You score from IT Department: " << cws << endl; }
+    ~IT() { cout << "IT destructor" << endl; }
 };
 
 class Mech : public DTU
@@ -42,12 +44,12 @@ int DTU::cws = 0;
 int main()
 {
     DTU *stream1 = new IT;
-    stream1->project();
-    stream1->evaluate();
-    DTU *stream2 = new Mech;
-    stream2->project();
-    stream2->evaluate();
+    // stream1->project();
+    // stream1->evaluate();
+    // DTU *stream2 = new Mech;
+    // stream2->project();
+    // stream2->evaluate();
     delete stream1;
-    delete stream2;
+    // delete stream2;
     return 0;
 }

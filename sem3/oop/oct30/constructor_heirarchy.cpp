@@ -16,4 +16,8 @@ public:
     ~Derived() { cout << "Derived destructor called" << endl; }
 };
 
-int main() { Derived d; }
+int main()
+{
+    Derived d;
+    return 0;
+}
