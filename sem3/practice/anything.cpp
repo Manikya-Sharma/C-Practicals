@@ -17,7 +17,7 @@ int main()
     (xobject.*ptfptr)(20);
 } */
 
-#include <iostream>
+/* #include <iostream>
 using namespace std;
 
 class A
@@ -50,5 +50,35 @@ int main()
     cout << "Size of B = " << sizeof(b) << endl;
     cout << "Size of C = " << sizeof(c) << endl;
     b.printX();
+    return 0;
+} */
+
+#include <iostream>
+using namespace std;
+
+class A
+{
+    int x;
+
+public:
+    A(int x) : x(x) {}
+    A() {}
+    A(const A &a)
+    {
+        cout << "COPY" << endl;
+        x = a.x;
+    }
+    A operator=(const A &a)
+    {
+        cout << "ASSIGN" << endl;
+        x = a.x;
+        return *this;
+    }
+};
+
+int main()
+{
+    A a(5), b;
+    b = a;
     return 0;
 }
