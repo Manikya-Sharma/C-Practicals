@@ -62,7 +62,7 @@ void findAverageTimes(int *arrivalTimes, int *bustTimes, int *priority,
         getNextProcess(arrivalTimes, isProcessCompleted, priority,
                        isHighNumberHighPriority, clock, numberOfProcesses);
     clock = arrivalTimes[process];
-
+    printf("\n");
     while (process != -1)
     {
 
@@ -79,8 +79,10 @@ void findAverageTimes(int *arrivalTimes, int *bustTimes, int *priority,
         process =
             getNextProcess(arrivalTimes, isProcessCompleted, priority,
                            isHighNumberHighPriority, clock, numberOfProcesses);
+        // print out which process was executed
+        printf("| P%d ", process + 1);
     }
-
+    printf("|\n\n");
     float averageWaitingTime = 0;
     float averageTurnaroundTime = 0;
     for (int i = 0; i < numberOfProcesses; i++)
