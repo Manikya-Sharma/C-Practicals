@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int getNextProcess(int *arrivalTimes, int *isProcessCompleted, int *burstTimes,
+int getNextProcess(int *arrivalTimes, int *isProcessCompleted, int *remainingTimes,
                    int clock, int numberOfProcesses)
 {
     if (clock == -1)
@@ -32,7 +32,7 @@ int getNextProcess(int *arrivalTimes, int *isProcessCompleted, int *burstTimes,
             // process has not yet arrived or it is already completed
             continue;
         }
-        if (burstTimes[i] > burstTimes[max])
+        if (remainingTimes[i] > remainingTimes[max])
         {
             max = i;
         }
