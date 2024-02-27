@@ -50,7 +50,7 @@ int getNextProcess(int *arrivalTimes, int *isProcessCompleted, int *priority,
     return min;
 }
 
-void findAverageTimes(int *arrivalTimes, int *bustTimes, int *priority,
+void findAverageTimes(int *arrivalTimes, int *burstTimes, int *priority,
                       int isHighNumberHighPriority, int numberOfProcesses)
 {
     int *completionTimes = (int *)calloc(numberOfProcesses, sizeof(int));
@@ -68,11 +68,11 @@ void findAverageTimes(int *arrivalTimes, int *bustTimes, int *priority,
 
         waitingTimes[process] = clock - arrivalTimes[process];
 
-        clock += bustTimes[process];
+        clock += burstTimes[process];
 
         completionTimes[process] = clock;
 
-        turnAroundTimes[process] = waitingTimes[process] + bustTimes[process];
+        turnAroundTimes[process] = waitingTimes[process] + burstTimes[process];
 
         isProcessCompleted[process] = 1;
 
@@ -99,7 +99,7 @@ void findAverageTimes(int *arrivalTimes, int *bustTimes, int *priority,
     printf("PID\tAT\tBT\tComp\tTA\tWT\n");
     for (int i = 0; i < numberOfProcesses; i++)
     {
-        printf("%d\t%d\t%d\t%d\t%d\t%d\n", i + 1, arrivalTimes[i], bustTimes[i],
+        printf("%d\t%d\t%d\t%d\t%d\t%d\n", i + 1, arrivalTimes[i], burstTimes[i],
                completionTimes[i], turnAroundTimes[i], waitingTimes[i]);
     }
     printf("\nAverage Waiting Time: %0.2f\n", averageWaitingTime);
@@ -114,9 +114,9 @@ void findAverageTimes(int *arrivalTimes, int *bustTimes, int *priority,
 int main()
 {
     int arrivalTime[6] = {1, 2, 3, 4, 5, 6};
-    int bustTime[6] = {4, 5, 1, 2, 3, 6};
+    int burstTime[6] = {4, 5, 1, 2, 3, 6};
     int priority[6] = {4, 5, 7, 2, 1, 6};
-    findAverageTimes(arrivalTime, bustTime, priority, 1, 6);
+    findAverageTimes(arrivalTime, burstTime, priority, 1, 6);
 
     return 0;
 }

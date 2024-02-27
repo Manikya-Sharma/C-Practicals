@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int getNextProcess(int *arrivalTimes, int *isProcessCompleted, int *bustTimes,
+int getNextProcess(int *arrivalTimes, int *isProcessCompleted, int *burstTimes,
                    int clock, int numberOfProcesses)
 {
     if (clock == -1)
     {
         // the first process is the one which arrived first, irrespective of its
-        // bust time
+        // burst time
         int min = 0;
         for (int i = 0; i < numberOfProcesses; i++)
         {
@@ -32,7 +32,7 @@ int getNextProcess(int *arrivalTimes, int *isProcessCompleted, int *bustTimes,
             // process has not yet arrived or it is already completed
             continue;
         }
-        if (bustTimes[i] < bustTimes[min])
+        if (burstTimes[i] < burstTimes[min])
         {
             min = i;
         }
@@ -40,14 +40,14 @@ int getNextProcess(int *arrivalTimes, int *isProcessCompleted, int *bustTimes,
     return min;
 }
 
-void findAverageTimes(int *arrivalTimes, int *bustTimes, int numberOfProcesses)
+void findAverageTimes(int *arrivalTimes, int *burstTimes, int numberOfProcesses)
 {
     int *completionTimes = (int *)calloc(numberOfProcesses, sizeof(int));
     int *turnAroundTimes = (int *)calloc(numberOfProcesses, sizeof(int));
     int *waitingTimes = (int *)calloc(numberOfProcesses, sizeof(int));
     int *isProcessCompleted = (int *)calloc(numberOfProcesses, sizeof(int));
     int clock = -1;
-    int process = getNextProcess(arrivalTimes, isProcessCompleted, bustTimes,
+    int process = getNextProcess(arrivalTimes, isProcessCompleted, burstTimes,
                                  clock, numberOfProcesses);
     clock = arrivalTimes[process];
     printf("\n");
@@ -56,15 +56,15 @@ void findAverageTimes(int *arrivalTimes, int *bustTimes, int numberOfProcesses)
 
         waitingTimes[process] = clock - arrivalTimes[process];
 
-        clock += bustTimes[process];
+        clock += burstTimes[process];
 
         completionTimes[process] = clock;
 
-        turnAroundTimes[process] = waitingTimes[process] + bustTimes[process];
+        turnAroundTimes[process] = waitingTimes[process] + burstTimes[process];
 
         isProcessCompleted[process] = 1;
 
-        process = getNextProcess(arrivalTimes, isProcessCompleted, bustTimes,
+        process = getNextProcess(arrivalTimes, isProcessCompleted, burstTimes,
                                  clock, numberOfProcesses);
         // print out which process was executed
         printf("| P%d ", process + 1);
@@ -86,7 +86,7 @@ void findAverageTimes(int *arrivalTimes, int *bustTimes, int numberOfProcesses)
     printf("PID\tAT\tBT\tComp\tTA\tWT\n");
     for (int i = 0; i < numberOfProcesses; i++)
     {
-        printf("%d\t%d\t%d\t%d\t%d\t%d\n", i + 1, arrivalTimes[i], bustTimes[i],
+        printf("%d\t%d\t%d\t%d\t%d\t%d\n", i + 1, arrivalTimes[i], burstTimes[i],
                completionTimes[i], turnAroundTimes[i], waitingTimes[i]);
     }
     printf("\nAverage Waiting Time: %0.2f\n", averageWaitingTime);
@@ -101,8 +101,8 @@ void findAverageTimes(int *arrivalTimes, int *bustTimes, int numberOfProcesses)
 int main()
 {
     int arrivalTime[5] = {1, 2, 3, 4, 5};
-    int bustTime[5] = {7, 5, 1, 2, 8};
-    findAverageTimes(arrivalTime, bustTime, 5);
+    int burstTime[5] = {7, 5, 1, 2, 8};
+    findAverageTimes(arrivalTime, burstTime, 5);
 
     return 0;
 }
