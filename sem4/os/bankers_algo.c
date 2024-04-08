@@ -67,6 +67,13 @@ int* determine_safe_sequence(int* resources, int** allocation,
             break;
         }
     }
+    // free the malloc'd data
+    free(available);
+    for (int i=0; i<num_processes; i++) {
+        free(need[i]);
+    }
+    free(need);
+    free(finished);
     return safe_sequence;
 }
 
@@ -98,11 +105,25 @@ int main() {
             max_allocation[i][j] = max_allocation_raw[i][j];
         }
     }
+
+    // determine the safe sequence
     int* sequence = determine_safe_sequence(
         resources, allocation, max_allocation, num_processes, num_resources);
     for (int i = 0; i < num_processes; i++) {
         printf("%d ", sequence[i]);
     }
     printf("\n");
+
+    // free the malloc'd data
+    free(resources);
+    for (int i=0; i<num_processes; i++) {
+        free(allocation[i]);
+    }
+    free(allocation);
+    for (int i=0; i<num_processes; i++) {
+        free(max_allocation[i]);
+    }
+    free(max_allocation);
+    free(sequence);
     return 0;
 }
