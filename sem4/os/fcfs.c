@@ -1,45 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int getNextProcess(int *processCompletion, int *arrivalTime,
-                   int numberOfProcesses)
-{
+int getNextProcess(int* processCompletion, int* arrivalTime,
+                   int numberOfProcesses) {
     int min = 0;
+    // find the first process not yer
     while (processCompletion[min] == 1)
-    {
         min++;
-    }
     // all processes are completed then return -1
     if (min >= numberOfProcesses)
         return -1;
     // find minimum
-    for (int i = 0; i < numberOfProcesses; i++)
-    {
+    for (int i = 0; i < numberOfProcesses; i++) {
         if (processCompletion[i] == 1)
             continue;
         if (arrivalTime[i] < arrivalTime[min])
-        {
             min = i;
-        }
     }
     return min;
 }
 
-void findAverageTimes(int *arrivalTime, int *burstTime, int numberOfProcesses)
-{
-    int *processCompletion = (int *)calloc(numberOfProcesses, sizeof(int));
-    int *serviceStart = (int *)calloc(numberOfProcesses, sizeof(int));
-    int *turnAroundTimes = (int *)calloc(numberOfProcesses, sizeof(int));
-    int *completionTime = (int *)calloc(numberOfProcesses, sizeof(int));
-    int *waitingTimes = (int *)calloc(numberOfProcesses, sizeof(int));
+void findAverageTimes(int* arrivalTime, int* burstTime, int numberOfProcesses) {
+    int* processCompletion = (int*)calloc(numberOfProcesses, sizeof(int));
+    int* serviceStart = (int*)calloc(numberOfProcesses, sizeof(int));
+    int* turnAroundTimes = (int*)calloc(numberOfProcesses, sizeof(int));
+    int* completionTime = (int*)calloc(numberOfProcesses, sizeof(int));
+    int* waitingTimes = (int*)calloc(numberOfProcesses, sizeof(int));
 
     int process =
         getNextProcess(processCompletion, arrivalTime, numberOfProcesses);
     // start from first arrival
     int clock = arrivalTime[process];
-    printf("\n");
-    while (process != -1)
-    {
+    printf("\nGantt Chart: ");
+    while (process != -1) {
         // service starts at clock time
         serviceStart[process] = clock;
 
@@ -65,8 +58,7 @@ void findAverageTimes(int *arrivalTime, int *burstTime, int numberOfProcesses)
     printf("|\n\n");
     float averageWaitingTime = 0;
     float averageTurnaroundTime = 0;
-    for (int i = 0; i < numberOfProcesses; i++)
-    {
+    for (int i = 0; i < numberOfProcesses; i++) {
         averageWaitingTime += waitingTimes[i];
         averageTurnaroundTime += turnAroundTimes[i];
     }
@@ -75,9 +67,8 @@ void findAverageTimes(int *arrivalTime, int *burstTime, int numberOfProcesses)
 
     // display the data
 
-    printf("PID\tAT\tBT\tStart\tComp\tTA\tWT\n");
-    for (int i = 0; i < numberOfProcesses; i++)
-    {
+    printf("PID\tA.T.\tB.T.\tStart\tComp\tT.A.\tW.T.\n");
+    for (int i = 0; i < numberOfProcesses; i++) {
         printf("%d\t%d\t%d\t%d\t%d\t%d\t%d\n", i + 1, arrivalTime[i],
                burstTime[i], serviceStart[i], completionTime[i],
                turnAroundTimes[i], waitingTimes[i]);
@@ -92,10 +83,9 @@ void findAverageTimes(int *arrivalTime, int *burstTime, int numberOfProcesses)
     free(waitingTimes);
 }
 
-int main()
-{
-    int arrivalTime[6] = {16, 2, 3, 1, 4, 5};
-    int burstTime[6] = {4, 5, 3, 1, 2, 6};
+int main() {
+    int arrivalTime[6] = {11, 12, 3, 3, 4, 5};
+    int burstTime[6] = {4, 5, 3, 7, 1, 6};
     findAverageTimes(arrivalTime, burstTime, 6);
     return 0;
 }

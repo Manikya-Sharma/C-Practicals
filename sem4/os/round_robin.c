@@ -3,45 +3,39 @@
 
 #define QUEUE_SIZE 100
 
-typedef struct
-{
+typedef struct {
     int processes[QUEUE_SIZE];
     int front;
     int back;
 } queue;
 
-queue getQueue()
-{
+queue getQueue() {
     queue q;
     q.front = 0;
     q.back = -1;
     return q;
 }
 
-int isQueueEmpty(queue *q) { return q->back < q->front; }
+int isQueueEmpty(queue* q) {
+    return q->back < q->front;
+}
 
-void addProcess(queue *q, int processId)
-{
+void addProcess(queue* q, int processId) {
     q->processes[++q->back] = processId;
 }
 
-int getNextProcessInQueue(queue *q)
-{
+int getNextProcessInQueue(queue* q) {
     // automatically removes from queue
     return q->processes[q->front++];
 }
 
-void updateQueue(int *arrivalTimes, int *remainingTimes,
-                 int *processAlreadyInQueue, int *clock, queue *q,
-                 int numberOfProcesses)
-{
-    if (*clock == 0)
-    {
+void updateQueue(int* arrivalTimes, int* remainingTimes,
+                 int* processAlreadyInQueue, int* clock, queue* q,
+                 int numberOfProcesses) {
+    if (*clock == 0) {
         int min = 0;
-        for (int i = 0; i < numberOfProcesses; i++)
-        {
-            if (arrivalTimes[i] < arrivalTimes[min])
-            {
+        for (int i = 0; i < numberOfProcesses; i++) {
+            if (arrivalTimes[i] < arrivalTimes[min]) {
                 min = i;
             }
         }
@@ -53,17 +47,14 @@ void updateQueue(int *arrivalTimes, int *remainingTimes,
     int i = 0;
 
     while (processAlreadyInQueue[i] || remainingTimes[i] == 0 ||
-           arrivalTimes[i] > *clock)
-    {
+           arrivalTimes[i] > *clock) {
         i++;
     }
 
     // add processes to queue
-    while (i < numberOfProcesses)
-    {
+    while (i < numberOfProcesses) {
         if (!processAlreadyInQueue[i] && remainingTimes[i] != 0 &&
-            arrivalTimes[i] <= *clock)
-        {
+            arrivalTimes[i] <= *clock) {
             addProcess(q, i);
             processAlreadyInQueue[i] = 1;
         }
@@ -71,35 +62,31 @@ void updateQueue(int *arrivalTimes, int *remainingTimes,
     }
 }
 
-void findAverageTimes(int *arrivalTimes, int *burstTimes, int tq,
-                      int numberOfProcesses)
-{
-    int *completionTimes = (int *)calloc(numberOfProcesses, sizeof(int));
-    int *turnaroundTimes = (int *)calloc(numberOfProcesses, sizeof(int));
-    int *waitingTimes = (int *)calloc(numberOfProcesses, sizeof(int));
-    int *remainingTimes = (int *)calloc(numberOfProcesses, sizeof(int));
+void findAverageTimes(int* arrivalTimes, int* burstTimes, int tq,
+                      int numberOfProcesses) {
+    int* completionTimes = (int*)calloc(numberOfProcesses, sizeof(int));
+    int* turnaroundTimes = (int*)calloc(numberOfProcesses, sizeof(int));
+    int* waitingTimes = (int*)calloc(numberOfProcesses, sizeof(int));
+    int* remainingTimes = (int*)calloc(numberOfProcesses, sizeof(int));
     // array of flags about processes in queue
-    int *processAlreadyInQueue = (int *)calloc(numberOfProcesses, sizeof(int));
+    int* processAlreadyInQueue = (int*)calloc(numberOfProcesses, sizeof(int));
     int clock = 0;
     queue q = getQueue();
 
     // copy all burst times in remaining times
-    for (int i = 0; i < numberOfProcesses; i++)
-    {
+    for (int i = 0; i < numberOfProcesses; i++) {
         remainingTimes[i] = burstTimes[i];
     }
 
     updateQueue(arrivalTimes, remainingTimes, processAlreadyInQueue, &clock, &q,
                 numberOfProcesses);
 
-    printf("\n");
+    printf("\nGantt Chart: ");
     // run the main loop
-    while (!isQueueEmpty(&q))
-    {
+    while (!isQueueEmpty(&q)) {
         int process = getNextProcessInQueue(&q);
         printf("| P%d ", process + 1);
-        if (remainingTimes[process] <= tq)
-        {
+        if (remainingTimes[process] <= tq) {
             clock += remainingTimes[process];
             remainingTimes[process] = 0;
             completionTimes[process] = clock;
@@ -110,8 +97,7 @@ void findAverageTimes(int *arrivalTimes, int *burstTimes, int tq,
             updateQueue(arrivalTimes, remainingTimes, processAlreadyInQueue,
                         &clock, &q, numberOfProcesses);
 
-        } else
-        {
+        } else {
             remainingTimes[process] -= tq;
             clock += tq;
             updateQueue(arrivalTimes, remainingTimes, processAlreadyInQueue,
@@ -122,8 +108,7 @@ void findAverageTimes(int *arrivalTimes, int *burstTimes, int tq,
     printf("|\n\n");
     float averageWaitingTime = 0;
     float averageTurnaroundTime = 0;
-    for (int i = 0; i < numberOfProcesses; i++)
-    {
+    for (int i = 0; i < numberOfProcesses; i++) {
         averageWaitingTime += waitingTimes[i];
         averageTurnaroundTime += turnaroundTimes[i];
     }
@@ -134,8 +119,7 @@ void findAverageTimes(int *arrivalTimes, int *burstTimes, int tq,
     // display the data
 
     printf("PID\tAT\tBT\tComp\tTA\tWT\n");
-    for (int i = 0; i < numberOfProcesses; i++)
-    {
+    for (int i = 0; i < numberOfProcesses; i++) {
         printf("%d\t%d\t%d\t%d\t%d\t%d\n", i + 1, arrivalTimes[i],
                burstTimes[i], completionTimes[i], turnaroundTimes[i],
                waitingTimes[i]);
@@ -150,8 +134,7 @@ void findAverageTimes(int *arrivalTimes, int *burstTimes, int tq,
     free(remainingTimes);
 }
 
-int main()
-{
+int main() {
     // does not work for unsorted arrival times
     int arrivalTimes[6] = {0, 1, 2, 3, 4, 6};
     int burstTimes[6] = {4, 5, 2, 1, 6, 3};

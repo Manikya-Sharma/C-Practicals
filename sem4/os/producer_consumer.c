@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define BUFFER_SIZE 10
+#define BUFFER_SIZE 5
 
 typedef struct {
 } item;
@@ -54,3 +54,4 @@ int main() {
     } while (choice != 0);
     return 0;
 }
+
