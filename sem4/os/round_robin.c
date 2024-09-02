@@ -136,8 +136,8 @@ void findAverageTimes(int* arrivalTimes, int* burstTimes, int tq,
 
 int main() {
     // does not work for unsorted arrival times
-    int arrivalTimes[6] = {0, 1, 2, 3, 4, 6};
-    int burstTimes[6] = {4, 5, 2, 1, 6, 3};
-    findAverageTimes(arrivalTimes, burstTimes, 2, 6);
+    int arrivalTimes[6] = {0, 1, 3, 5, 5};
+    int burstTimes[6] = {3, 1, 4, 2, 1};
+    findAverageTimes(arrivalTimes, burstTimes, 1, 5);
     return 0;
 }
