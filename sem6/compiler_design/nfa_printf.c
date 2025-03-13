@@ -120,7 +120,7 @@ TokenType nfa_punctuation(char input[], int* lexeme_begin) {
 }
 
 // The main function to perform lexical analysis of given input
-void lexical_analysis(char input[], TokenType tokens[], int* count,
+void lexical_analyzer(char input[], TokenType tokens[], int* count,
                       int literals[], int literal_count) {
     int lexeme_begin = 0;
     while (input[lexeme_begin] != 0) {
@@ -235,7 +235,7 @@ int main() {
     int literals[MAX_LEN];
     int literal_count = 0;
 
-    lexical_analysis(input, tokens, &count, literals, literal_count);
+    lexical_analyzer(input, tokens, &count, literals, literal_count);
 
     printf("Number of tokens: %d\n", count);
     printf("Tokens:-\n");
