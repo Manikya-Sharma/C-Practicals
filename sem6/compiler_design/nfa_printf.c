@@ -158,8 +158,6 @@ void lexical_analyzer(char input[], TokenType tokens[], int* count,
             return;
         token = nfa_whitespace(input, &lexeme_begin);
         if (token != UNMATCH) {
-            tokens[*count] = token;
-            *count = *count + 1;
             continue;
         }
         if (token == ERROR)

@@ -196,7 +196,6 @@ void lexical_analyzer(char input[], TokenType tokens[], int* token_count,
             tokens[*token_count] = token;
             *token_count = *token_count + 1;
             continue;
-        }
         printf("Unexpected token\n");
         exit(1);
     }
